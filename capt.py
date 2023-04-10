@@ -9,7 +9,7 @@ from colorama import Fore,Back,Style
 colorama.init(autoreset=False)
 os.system("title capt")
 
-#请在此输入窗口名
+#将此变量修改为你想捕获的窗口名
 w='任务管理器'
 
 def local_ip():
