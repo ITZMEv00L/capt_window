@@ -18,15 +18,17 @@ def local_ip():
 	local_ip = ''.join(socket.gethostbyname_ex(hostname)[-1])
 	return local_ip
 
+#初始化
 app = QApplication(sys.argv)
 screen = QApplication.primaryScreen()
 
-#修改程序工作目录
+FailsafeMap=['None','未能找到程序']
+
 path=sys.path[0]
 os.chdir(path)
 
+
 #输出程序工作基本信息
-FailsafeMap=['None','未能找到程序']
 print (Fore.YELLOW +'|'+'X'*len(os.getcwd()),'INFO','X'*len(os.getcwd()))
 print(Fore.GREEN+'|','工作目录   -',os.getcwd())
 print(Fore.GREEN+'|','本机内网ip -',local_ip())
