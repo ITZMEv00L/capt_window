@@ -13,24 +13,25 @@ os.system("title capt")
 w='任务管理器'
 
 def local_ip():
-
+	# 获取本机内网ip 并返回
 	hostname = socket.gethostname()
-	# 获取本机内网ip
 	local_ip = ''.join(socket.gethostbyname_ex(hostname)[-1])
-
 	return local_ip
 
 app = QApplication(sys.argv)
 screen = QApplication.primaryScreen()
 
+#修改程序工作目录
 path=sys.path[0]
 os.chdir(path)
 
+#输出程序工作基本信息
 FailsafeMap=['None','未能找到程序']
 print (Fore.YELLOW +'|'+'X'*len(os.getcwd()),'INFO','X'*len(os.getcwd()))
 print(Fore.GREEN+'|','工作目录   -',os.getcwd())
 print(Fore.GREEN+'|','本机内网ip -',local_ip())
 print('\n')
+
 def capture():
 	hwnd = win32gui.FindWindow(None, w)#Handle of Window
 	global Failsafe
@@ -56,6 +57,7 @@ def main():
 		request = conn.recv(1024)
 		capture()
 		if Failsafe!=0:
+			#失败时返回信息
 			print(Fore.BLUE+Back.WHITE+'\n>'+'a clinet from','-',Fore.BLUE+str(address[0]) +":"+ str(address[1]))
 			print(Fore.RED+Back.WHITE+'! Failsafe -',FailsafeMap[Failsafe])
 			conn.send(b'HTTP/1.1 200 Failsafe\r\n')
@@ -63,7 +65,7 @@ def main():
 			b1 = bytes(FailsafeMap[Failsafe],'UTF-8')
 			b2=b'<p>'+b1+b'</>'
 			conn.send(b2)
-		else:
+		else: #返回本机所捕获的程序图像
 			try:
 				conn.send(b'HTTP/1.1 200 OK\r\n')
 				conn.send(b'Content-Type:image/jpg\r\n\r\n')
@@ -72,7 +74,8 @@ def main():
 				conn.close()
 			except:
 				conn.close()
-		
+	
+#主程序循环
 while True:
 	while True:
 		main()
