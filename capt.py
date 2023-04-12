@@ -67,6 +67,7 @@ def main():
 			b1 = bytes(FailsafeMap[Failsafe],'UTF-8')
 			b2=b'<p>'+b1+b'</>'
 			conn.send(b2)
+                        conn.close()
 		else: #返回本机所捕获的程序图像
 			try:
 				conn.send(b'HTTP/1.1 200 OK\r\n')
